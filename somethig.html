@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DIM Weight Calculator</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1>DIM Weight Calculator</h1>
+      <button id="myModalBtn" class="btn btn-primary mt-3">Launch Calculator</button>
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal Title</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+            </div>
+
+            <div class="container mt-5">
+              <h1></h1>
+              <form id="ttdd">
+                <div class="form-group">
+                  <label for="length">Length (inches):</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="length"
+                    placeholder="Enter length in inches"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="width">Width (inches):</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="width"
+                    placeholder="Enter width in inches"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="height">Height (inches):</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="height"
+                    placeholder="Enter height in inches"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="weight">Weight (lbs):</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="weight"
+                    placeholder="Enter weight in pounds"
+                  />
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="submitForm()"
+                >
+                  Search
+                </button>
+              </form>
+              <div id="Result" class="mt-4"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal container">
+      <h1></h1>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-5">
+              <img src="https://via.placeholder.com/150x150" alt="Product Image">
+            </div>
+            <div id="sad" class="col-md-7">
+              <h3 id="product_name">Product Name</h3>
+              <p id="description">
+                Description of the product goes here.
+              </p>
+              <p id="dim">DIM</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script>
+      var modalBtn = document.getElementById("myModalBtn");
+      var modal = document.getElementById("myModal");
+      var fetchs = document.getElementById("ttdd");
+      var closeBtn = document.getElementsByClassName("close")[0];
+
+      modalBtn.onclick = function () {
+        modal.style.display = "block";
+        setTimeout(function() {
+          // Code to execute after 5 seconds
+          modal.fadeOut();
+        }, 5000);
+      };
+
+      fetchs.onsubmit = function () {
+        submitForm();
+      };
+
+      closeBtn.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      function calculateDimWeight() {
+        // get input values
+        var length = document.getElementById("length").value;
+        var width = document.getElementById("width").value;
+        var height = document.getElementById("height").value;
+
+        // calculate dim weight
+        var dimWeight = (length * width * height) / 166;
+
+        // display result
+        return "DIM Weight: " + dimWeight.toFixed(2) + " lbs.";
+      }
+
+      function setProduct(product, calculation) {
+        document.getElementById("product_name").innerHTML = product["name"];
+        document.getElementById("description").innerHTML = product["description"];
+        document.getElementById("dim").innerHTML = calculation;
+        document.getElementsByClassName("modal")[1].style.display = "contents";
+        // document.getElementById("weight").value;
+        console.log(product);
+      }
+
+      function submitForm() {
+        const form = document.getElementById("ttdd");
+        (length = document.getElementById("length").value),
+          (width = document.getElementById("width").value),
+          (height = document.getElementById("height").value);
+          (weight = document.getElementById("height").value);
+        fetch(
+          "http://localhost:3000/api/v1/product_search?length=" +
+            length +
+            "&width=" +
+            width +
+            "&height=" +
+            height +
+            "&weight=" +
+            weight
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setProduct(data, calculateDimWeight());
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
