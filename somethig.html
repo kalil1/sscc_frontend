@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DIM Weight Calculator</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css"
+    />
   </head>
   <body>
     <div class="container mt-5">
@@ -13,178 +15,133 @@
       <button id="myModalBtn" class="btn btn-primary mt-3">Launch Calculator</button>
     </div>
 
-    <div id="myModal" class="modal">
+    <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal Title</h5>
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
+            <h5 class="modal-title" id="modalLabel">Modal Title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="container message">
-            </div>
-
-            <div class="container mt-5">
-              <h1></h1>
-              <form id="ttdd">
-                <div class="form-group">
-                  <label for="length">Length (inches):</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="length"
-                    placeholder="Enter length in inches"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="width">Width (inches):</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="width"
-                    placeholder="Enter width in inches"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="height">Height (inches):</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="height"
-                    placeholder="Enter height in inches"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="weight">Weight (lbs):</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="weight"
-                    placeholder="Enter weight in pounds"
-                  />
-                </div>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onclick="submitForm()"
-                >
-                  Search
-                </button>
-              </form>
-              <div id="Result" class="mt-4"></div>
-            </div>
+            <form id="ttdd">
+              <div class="form-group mb-3">
+                <label for="length">Length (inches):</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="length"
+                  placeholder="Enter length in inches"
+                  required
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="width">Width (inches):</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="width"
+                  placeholder="Enter width in inches"
+                  required
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="height">Height (inches):</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="height"
+                  placeholder="Enter height in inches"
+                  required
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="weight">Weight (lbs):</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="weight"
+                  placeholder="Enter weight in pounds"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Calculate</button>
+            </form>
+            <div id="Result" class="mt-4"></div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="modal container">
-      <h1></h1>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-md-5">
-              <img src="https://via.placeholder.com/150x150" alt="Product Image">
-            </div>
-            <div id="sad" class="col-md-7">
-              <h3 id="product_name">Product Name</h3>
-              <p id="description">
-                Description of the product goes here.
-              </p>
-              <p id="dim">DIM</p>
-            </div>
+
+    <div id="productModal" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-md-5">
+                    <img src="https://via.placeholder.com/150x150" alt="Product Image" />
+                  </div>
+                  <div class="col-md-7">
+                    <h3 id="product_name">Product Name</h3>
+                    <p id="description">Description of the product goes here.</p>
+                    <p id="dim">DIM</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
     <script>
-      var modalBtn = document.getElementById("myModalBtn");
-      var modal = document.getElementById("myModal");
-      var fetchs = document.getElementById("ttdd");
-      var closeBtn = document.getElementsByClassName("close")[0];
+      const modalBtn = document.getElementById("myModalBtn");
+      const modal = new bootstrap.Modal(document.getElementById("myModal"));
+      const productModal = new bootstrap.Modal(document.getElementById("productModal"));
+      const form = document.getElementById("ttdd");
 
-      modalBtn.onclick = function () {
-        modal.style.display = "block";
-      };
+      modalBtn.addEventListener("click", () => modal.show());
 
-      fetchs.onsubmit = function () {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
         submitForm();
-      };
+      });
 
-      closeBtn.onclick = function () {
-        modal.style.display = "none";
-      };
-
-      window.onclick = function (event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      };
-
-      function calculateDimWeight() {
-        // get input values
-        var length = document.getElementById("length").value;
-        var width = document.getElementById("width").value;
-        var height = document.getElementById("height").value;
-
-        // calculate dim weight
-        var dimWeight = (length * width * height) / 166;
-
-        // display result
-        return "DIM Weight: " + dimWeight.toFixed(2) + " lbs.";
+      function calculateDimWeight(length, width, height) {
+        return (length * width * height) / 166;
       }
 
       function setProduct(product, calculation) {
-        if (product === null || undefined) {
-          document.getElementsByClassName("message")[0].innerHTML = "No Products Found";
+        if (!product) {
+          document.getElementById("Result").innerHTML = "No Products Found";
         } else {
-          document.getElementsByClassName("message")[0].innerHTML = " ";
-          document.getElementById("product_name").innerHTML = product["name"];
-          document.getElementById("description").innerHTML = product["description"];
-          document.getElementById("dim").innerHTML = calculation;
-          document.getElementsByClassName("modal")[1].style.display = "inline-flex";
-          // document.getElementById("weight").value;
-          console.log(product);
+          document.getElementById("product_name").textContent = product.name;
+          document.getElementById("description").textContent = product.description;
+          document.getElementById("dim").textContent = `DIM Weight: ${calculation.toFixed(2)} lbs.`;
+          productModal.show();
         }
       }
 
       function submitForm() {
-        const form = document.getElementById("ttdd");
-        (length = document.getElementById("length").value),
-          (width = document.getElementById("width").value),
-          (height = document.getElementById("height").value);
-          (weight = document.getElementById("weight").value);
+        const length = document.getElementById("length").value;
+        const width = document.getElementById("width").value;
+        const height = document.getElementById("height").value;
+        const weight = document.getElementById("weight").value;
+
         fetch(
-          "http://localhost:3000/api/v1/product_search?length=" +
-            length +
-            "&width=" +
-            width +
-            "&height=" +
-            height +
-            "&weight=" +
-            weight
+          `http://localhost:3000/api/v1/product_search?length=${length}&width=${width}&height=${height}&weight=${weight}`
         )
           .then((response) => response.json())
           .then((data) => {
-            setProduct(data, calculateDimWeight());
-            setTimeout(function() {
-              // Code to execute after 5 seconds
-              document.getElementById("myModal").style.display = "none";
-            }, 5000);
+            const dimWeight = calculateDimWeight(length, width, height);
+            setProduct(data, dimWeight);
+            setTimeout(() => modal.hide(), 5000);
           })
           .catch((error) => {
             console.error("Error fetching data:", error);
